@@ -24,6 +24,7 @@ function fulfilled() {
         cloakSpan.innerText = raceCounter.cloak.toString();
         stoneSpan.innerText = raceCounter.stone.toString();
         wandSpan.innerText = raceCounter.wand.toString();
+    });
     //do something on start
     console.log("Connection to User Hub Successful");
 }
