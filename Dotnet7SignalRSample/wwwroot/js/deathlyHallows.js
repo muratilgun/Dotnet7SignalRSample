@@ -1,34 +1,32 @@
-﻿//create connection
-var connectionUDeathlyHallows = new signalR.HubConnectionBuilder()
+﻿var cloakSpan = document.getElementById("cloakCounter");
+var stoneSpan = document.getElementById("stoneCounter");
+var wandSpan = document.getElementById("wandCounter");
+
+//create connection
+var connectionDeathlyHallows = new signalR.HubConnectionBuilder()
 //.configureLogging(signalR.LogLevel.Information)
     .withUrl("/hubs/deathyhallows").build();
 
 //connect to methods that hub invokes aka receive notfications from hub
-connectionUDeathlyHallows.on("updateDeathlyHallowCount",(cloak,stone,wand) => {
-    var newCountSpan = document.getElementById("totalViewsCounter");
-    newCountSpan.innerText = value.toString();
-});
-
-connectionUserCount.on("updateTotalUsers", (value) => {
-    var newCountSpan = document.getElementById("totalUsersCounter");
-    newCountSpan.innerText = value.toString();
+connectionDeathlyHallows.on("updateDealthyHallowCount", (cloak, stone, wand) => {
+    cloakSpan.innerText = cloak.toString();
+    stoneSpan.innerText = stone.toString();
+    wandSpan.innerText = wand.toString();
 });
 
 //invoke hub methods aka send notification to hub
-function newWindowLoadedOnClient() {
-    connectionUserCount.invoke("NewWindowLoaded","Murat").then((value)=> console.log(value));
-}
+
+
 
 //start connection
 function fulfilled() {
-    // do something on start
-    console.log("Connection to User Hub Successful");
-    newWindowLoadedOnClient();
-}
 
+    //do something on start
+    console.log("Connection to User Hub Successful");
+}
 function rejected() {
     //rejected logs
 }
 
-connectionUserCount.start().then(fulfilled,rejected);
+connectionDeathlyHallows.start().then(fulfilled, rejected);
 
