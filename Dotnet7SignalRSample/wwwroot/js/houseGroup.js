@@ -61,6 +61,33 @@ btn_un_slytherin.addEventListener("click", function (event) {
     event.preventDefault();
 });
 
+// Trigger Notifications
+
+trigger_gryffindor.addEventListener("click", function (event) {
+    connectionHouse.send("TriggerHouseNotify", "Gryffindor");
+    event.preventDefault();
+});
+trigger_hufflepuff.addEventListener("click", function (event) {
+    connectionHouse.send("TriggerHouseNotify", "Hufflepuff");
+    event.preventDefault();
+});
+trigger_ravenclaw.addEventListener("click", function (event) {
+    connectionHouse.send("TriggerHouseNotify", "Ravenclaw");
+    event.preventDefault();
+});
+trigger_slytherin.addEventListener("click", function (event) {
+    connectionHouse.send("TriggerHouseNotify", "Slytherin");
+    event.preventDefault();
+});
+
+
+
+
+
+connectionHouse.on("triggerHouseNotification", (houseName) => {
+    toastr.success(`A new notification for ${houseName} has been launched.`);
+});
+
 connectionHouse.on("newMemberAddedToHouse", (houseName) => {
     toastr.success(`Member has subscribed to ${houseName}`);
 });
@@ -125,6 +152,8 @@ connectionHouse.on("subscriptionStatus",
         }
 
     });
+
+
 
 
 
