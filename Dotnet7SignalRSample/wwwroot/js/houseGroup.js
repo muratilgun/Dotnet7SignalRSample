@@ -61,7 +61,13 @@ btn_un_slytherin.addEventListener("click", function (event) {
     event.preventDefault();
 });
 
+connectionHouse.on("newMemberAddedToHouse", (houseName) => {
+    toastr.success(`Member has subscribed to ${houseName}`);
+});
 
+connectionHouse.on("newMemberRemovedFromHouse", (houseName) => {
+    toastr.warning(`Member has unsubscribed from ${houseName}`);
+});
 connectionHouse.on("subscriptionStatus",
     (strGroupsJoined, houseName, hasSubscribed) => {
         lbl_houseJoined.innerText = strGroupsJoined;

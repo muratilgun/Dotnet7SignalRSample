@@ -23,7 +23,7 @@ public class HouseGroupHub : Hub
 
 
             await Clients.Caller.SendAsync("subscriptionStatus",houseList,houseName.ToLower(),true);
-
+            await Clients.Others.SendAsync("newMemberAddedToHouse", houseName);
             await Groups.AddToGroupAsync(Context.ConnectionId, houseName);
         }
     }
@@ -44,6 +44,8 @@ public class HouseGroupHub : Hub
 
 
             await Clients.Caller.SendAsync("subscriptionStatus", houseList, houseName.ToLower(), false);
+            await Clients.Others.SendAsync("newMemberRemovedFromHouse", houseName);
+
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, houseName);
         }
     }
