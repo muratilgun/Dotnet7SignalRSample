@@ -22,14 +22,14 @@ public class HouseGroupHub : Hub
             }
 
 
-            await Clients.Caller.SendAsync("subscriptionStatus",houseList,houseName,true);
+            await Clients.Caller.SendAsync("subscriptionStatus",houseList,houseName.ToLower(),true);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, houseName);
         }
     }
     public async Task LeaveHouse(string houseName)
     {
-        if (!GroupsJoined.Contains(Context.ConnectionId + ":" + houseName))
+        if (GroupsJoined.Contains(Context.ConnectionId + ":" + houseName))
         {
             GroupsJoined.Remove(Context.ConnectionId + ":" + houseName);
 
@@ -43,9 +43,7 @@ public class HouseGroupHub : Hub
             }
 
 
-            await Clients.Caller.SendAsync("subscriptionStatus", houseList, houseName, false);
-
-
+            await Clients.Caller.SendAsync("subscriptionStatus", houseList, houseName.ToLower(), false);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, houseName);
         }
     }

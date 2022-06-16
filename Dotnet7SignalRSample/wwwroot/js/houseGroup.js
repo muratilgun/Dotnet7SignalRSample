@@ -48,17 +48,14 @@ btn_un_gryffindor.addEventListener("click", function (event) {
     connectionHouse.send("LeaveHouse", "Gryffindor");
     event.preventDefault();
 });
-
 btn_un_hufflepuff.addEventListener("click", function (event) {
     connectionHouse.send("LeaveHouse", "Hufflepuff");
     event.preventDefault();
 });
-
 btn_un_ravenclaw.addEventListener("click", function (event) {
     connectionHouse.send("LeaveHouse", "Ravenclaw");
     event.preventDefault();
 });
-
 btn_un_slytherin.addEventListener("click", function (event) {
     connectionHouse.send("LeaveHouse", "Slytherin");
     event.preventDefault();
@@ -70,7 +67,8 @@ connectionHouse.on("subscriptionStatus",
         lbl_houseJoined.innerText = strGroupsJoined;
 
         if (hasSubscribed) {
-            //subscribe
+            //subscribe to
+
             switch (houseName) {
             case 'slytherin':
                 btn_slytherin.style.display = "none";
@@ -93,24 +91,25 @@ connectionHouse.on("subscriptionStatus",
             }
 
             toastr.success(`You have Subscribed Successfully. ${houseName}`);
-        } else {
-            // unsubscribe
+        }
+        else {
+            //unsubscribe
             switch (houseName) {
             case 'slytherin':
                 btn_slytherin.style.display = "";
-                    btn_un_slytherin.style.display = "none";
+                btn_un_slytherin.style.display = "none";
                 break;
             case 'gryffindor':
                 btn_gryffindor.style.display = "";
-                    btn_un_gryffindor.style.display = "none";
+                btn_un_gryffindor.style.display = "none";
                 break;
             case 'hufflepuff':
                 btn_hufflepuff.style.display = "";
-                    btn_un_hufflepuff.style.display = "none";
+                btn_un_hufflepuff.style.display = "none";
                 break;
             case 'ravenclaw':
                 btn_ravenclaw.style.display = "";
-                    btn_un_ravenclaw.style.display = "none";
+                btn_un_ravenclaw.style.display = "none";
                 break;
             default:
                 break;
@@ -118,6 +117,7 @@ connectionHouse.on("subscriptionStatus",
 
             toastr.success(`You have Unsubscribed Successfully. ${houseName}`);
         }
+
     });
 
 
