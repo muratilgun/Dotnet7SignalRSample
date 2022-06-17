@@ -13,12 +13,13 @@ namespace Dotnet7SignalRSample.Hubs
             {
                 notificationCounter++;
                 messages.Add(message);
+                await LoadMessages();
             }
         }
 
         public async Task LoadMessages()
         {
-            await Clients.All.SendAsync("", messages, notificationCounter);
+            await Clients.All.SendAsync("LoadNotification", messages, notificationCounter);
         }
     }
 }
