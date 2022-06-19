@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Dotnet7SignalRSample.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dotnet7SignalRSample.Data
@@ -9,5 +10,7 @@ namespace Dotnet7SignalRSample.Data
             : base(options)
         {
         }
+
+        public DbSet<Order> Orders { get; set; }
     }
 }
