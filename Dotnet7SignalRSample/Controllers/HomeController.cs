@@ -1,8 +1,11 @@
 ﻿using Dotnet7SignalRSample.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using Dotnet7SignalRSample.Data;
 using Dotnet7SignalRSample.Hubs;
+using Dotnet7SignalRSample.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Dotnet7SignalRSample.Controllers
@@ -31,9 +34,17 @@ namespace Dotnet7SignalRSample.Controllers
         {
             return View();
         }
+        [Authorize]
         public IActionResult Chat()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ChatVM chatVm = new()
+            {
+                Rooms = _context.ChatRoom.ToList(),
+                MaxRoomAllowed = 4,
+                UserId = userId
+            };
+            return View(chatVm);
         }
         public async Task<IActionResult> DeathlyHallows(string type)
         {
