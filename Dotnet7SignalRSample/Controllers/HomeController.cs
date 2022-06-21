@@ -31,6 +31,10 @@ namespace Dotnet7SignalRSample.Controllers
         {
             return View();
         }
+        public IActionResult Chat()
+        {
+            return View();
+        }
         public async Task<IActionResult> DeathlyHallows(string type)
         {
             if (SD.DealthyHallowRace.ContainsKey(type))
