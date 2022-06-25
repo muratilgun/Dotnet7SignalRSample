@@ -19,6 +19,22 @@ public class HubConnections
 
         return false;
     }
+    public static bool HasUser(string UserId)
+    {
+        try
+        {
+            if (Users.ContainsKey(UserId))
+            {
+                return Users[UserId].Any();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        return false;
+    }
     public static void AddUserConnection(string UserId, string ConnectionId)
     {
 

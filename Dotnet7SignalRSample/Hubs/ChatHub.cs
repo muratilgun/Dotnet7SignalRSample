@@ -19,7 +19,7 @@ public class ChatHub : Hub
         if (!string.IsNullOrEmpty(userId))
         {
             var userName = _db.Users.FirstOrDefault(u => u.Id == userId).UserName;
-            Clients.Users(HubConnections.OnlineUsers()).SendAsync("ReceiveUserConnected",userId,userName);
+            Clients.Users(HubConnections.OnlineUsers()).SendAsync("ReceiveUserConnected",userId,userName,HubConnections.HasUser(userId));
             HubConnections.AddUserConnection(userId, Context.ConnectionId);
         }
         return Task.CompletedTask;
