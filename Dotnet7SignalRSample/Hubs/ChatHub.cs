@@ -19,10 +19,36 @@ public class ChatHub : Hub
         if (!string.IsNullOrEmpty(userId))
         {
             var userName = _db.Users.FirstOrDefault(u => u.Id == userId).UserName;
-            Clients.Users(HubConnections.OnlineUsers()).SendAsync("ReceiveUserConnected",userId,userName,HubConnections.HasUser(userId));
+            Clients.Users(HubConnections.OnlineUsers()).SendAsync("ReceiveUserConnected",userId,userName);
             HubConnections.AddUserConnection(userId, Context.ConnectionId);
         }
-        return Task.CompletedTask;
+        return base.OnConnectedAsync();
+    }
+
+    public override Task OnDisconnectedAsync(Exception? exception)
+    {
+        var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (HubConnections.HasUserConnection(userId, Context.ConnectionId))
+        {
+            var userConnections = HubConnections.Users[userId];
+            userConnections.Remove(Context.ConnectionId);
+            HubConnections.Users.Remove(userId);
+            if (userConnections.Any())
+            {
+                HubConnections.Users.Add(userId, userConnections);
+            }
+        }
+
+
+        if (!string.IsNullOrEmpty(userId))
+        {
+            var userName = _db.Users.FirstOrDefault(u => u.Id == userId).UserName;
+            Clients.Users(HubConnections.OnlineUsers()).SendAsync("ReceiveUserDisconnected", userId, userName);
+            HubConnections.AddUserConnection(userId, Context.ConnectionId);
+        }
+
+        return base.OnDisconnectedAsync(exception);
     }
 
 

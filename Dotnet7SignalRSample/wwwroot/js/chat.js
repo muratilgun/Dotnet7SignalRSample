@@ -4,13 +4,18 @@
     .build();
 
 
-connection.on("ReceiveUserConnected", function (userId, userName, isOldConnection) {
-    if (!isOldConnection) {
-        addMessage(`${userName} is online`);
-    }
+connection.on("ReceiveUserConnected", function (userId, userName) {
+
+    addMessage(`${userName} has a connection open`);
+
 });
 
 
+connection.on("ReceiveUserDisconnected", function (userId, userName) {
+
+    addMessage(`${userName} has closed a connection`);
+
+});
 
 function addMessage(msg) {
     if (msg == null && msg == '') {
