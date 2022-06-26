@@ -32,6 +32,12 @@ connection.on("ReceivePublicMessage",
 
     });
 
+connection.on("ReceivePrivateMessage",
+    function (senderId, senderName, receiverId, message, chatId, receiverName) {
+        addMessage(`[Private Message - ${receiverName}] ${senderName} says ${message}`);
+
+    });
+
 function sendPublicMessage() {
     let inputMsg = document.getElementById('txtPublicMessage');
     let ddlSelRoom = document.getElementById('ddlSelRoom');
@@ -39,7 +45,21 @@ function sendPublicMessage() {
     let roomId = ddlSelRoom.value;
     let roomName = ddlSelRoom.options[ddlSelRoom.selectedIndex].text;
     var message = inputMsg.value;
-    connection.send("SendPublicMessage",Number(roomId),message,roomName);
+    connection.send("SendPublicMessage", Number(roomId), message, roomName);
+    inputMsg.value = '';
+}
+
+
+function sendPrivateMessage() {
+    let inputMsg = document.getElementById('txtPrivateMessage');
+    let ddlSelUser = document.getElementById('ddlSelUser');
+
+    let receiverId = ddlSelUser.value;
+    let receiverName = ddlSelUser.options[ddlSelUser.selectedIndex].text;
+    var message = inputMsg.value;
+    connection.send("SendPrivateMessage", receiverId, message, receiverName);
+    inputMsg.value = '';
+
 }
 
 function addnewRoom(maxRoom) {
