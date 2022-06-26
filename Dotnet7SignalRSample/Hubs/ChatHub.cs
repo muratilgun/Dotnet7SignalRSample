@@ -51,6 +51,12 @@ public class ChatHub : Hub
         return base.OnDisconnectedAsync(exception);
     }
 
+    public async Task SendAddRoomMessage(int maxRoom, int roomId, string roomName)
+    {
+        var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userName = _db.Users.FirstOrDefault(u => u.Id == userId).UserName;
+        await Clients.All.SendAsync("ReceiveAddRoomMessage",maxRoom,roomId,roomName,userId,userName);
+    }
 
     //public async Task SendMessageToAll(string user, string message)
     //{
