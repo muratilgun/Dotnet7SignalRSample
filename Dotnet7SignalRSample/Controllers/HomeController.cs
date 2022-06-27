@@ -117,5 +117,18 @@ namespace Dotnet7SignalRSample.Controllers
             var productList = _context.Orders.ToList();
             return Json(new { data = productList });
         }
+
+        public IActionResult AdvancedChat()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ChatVM chatVm = new()
+            {
+                Rooms = _context.ChatRoom.ToList(),
+                MaxRoomAllowed = 4,
+                UserId = userId,
+            };
+            return View(chatVm);
+        }
+
     }
 }
